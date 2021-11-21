@@ -1,9 +1,10 @@
 Given(/^I am not logged in visitor$/) do
-  visit 'http://192.168.88.224'
+  @home_screen = HomeScreen.new
+  @home_screen.load
 end
 
 When(/^I click Sign in button$/) do
-  find(:xpath, '//*[@id="account"]/ul/li[1]/a').click
+  @home_screen.top_menu.sign_in_link.click
 end
 
 Then(/^I see the log in form is opened$/) do
@@ -14,16 +15,28 @@ Then(/^I see the log in form is opened$/) do
 end
 
 When(/^I fill in log in for with valid credentials$/) do
-  find('#username').set 'tratata'
-  find('#password').set 'test123456'
+  @login_screen = LoginScreen.new
+
+  @login_screen.user_name_field.set 'tratata'
+  @login_screen.password_field.set 'test123456'
 end
 
 And(/^I click log in button$/) do
-  find('#login-submit').click
+  @login_screen.submit_btn.click
 end
 
 Then(/^I become a logged in user$/) do
   expect(page).to have_content 'Logged in as tratata'
+
+  sleep 3
+end
+
+Given(/^I am logged in as "([^"]*)"$/) do |user_name|
+  login user_name, 'test123456'
+end
+
+Then(/^I become a logged in as "([^"]*)"$/) do |user_name|
+  expect(page).to have_content "Logged in as #{user_name}"
 
   sleep 3
 end

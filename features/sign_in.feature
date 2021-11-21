@@ -11,4 +11,4 @@ Feature: Sign in
 
     When I fill in log in for with valid credentials
     And I click log in button
-    Then I become a logged in user
+    Then I become a logged in as "tratata"

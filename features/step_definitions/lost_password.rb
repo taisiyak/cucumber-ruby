@@ -13,5 +13,5 @@ end
 Then(/^I receive an error message$/) do
   expect(page).to have_content 'Unknown user.'
 
-  sleep 5
+  sleep 2
 end
